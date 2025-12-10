@@ -1,0 +1,40 @@
+<div class="container">
+  <header class="page-header">
+    <h1>🔮 KÜLKAT - Különleges Lények Katasztere</h1>
+    <p class="subtitle">A világ legfurcsább és legkülönlegesebb létezőinek hivatalos nyilvántartása</p>
+    
+    <div class="action-buttons">
+      <a routerLink="/contact" class="btn btn-secondary">📧 Kapcsolat</a>
+      <a *ngIf="isAuthenticated" routerLink="/creatures/new" class="btn btn-primary">➕ Új Lény</a>
+      <button *ngIf="isAuthenticated" (click)="logout()" class="btn btn-danger">🚪 Kijelentkezés</button>
+      <a *ngIf="!isAuthenticated" routerLink="/login" class="btn btn-success">🔑 Bejelentkezés</a>
+      <a *ngIf="!isAuthenticated" routerLink="/register" class="btn btn-info">📝 Regisztráció</a>
+    </div>
+  </header>
+
+  <div *ngIf="isLoading" class="loading">Töltés...</div>
+
+  <div *ngIf="!isLoading && creatures.length === 0" class="empty-state">
+    <p>😔 Még nincsenek lények a nyilvántartásban</p>
+    <a *ngIf="isAuthenticated" routerLink="/creatures/new" class="btn btn-primary">Adj hozzá egyet!</a>
+  </div>
+
+  <div class="creatures-grid" *ngIf="!isLoading && creatures.length > 0">
+    <div class="creature-card" *ngFor="let creature of creatures" (click)="viewDetails(creature.id)">
+      <div class="creature-badge">{{ creature.kategoria?.nev }}</div>
+      <h3>{{ creature.nev }}</h3>
+      <p class="creature-origin" *ngIf="creature.eredet">📍 {{ creature.eredet }}</p>
+      <p class="creature-description">{{ creature.leiras | slice:0:100 }}...</p>
+      <div class="creature-meta">
+        <span class="rarity">⭐ Ritkaság: {{ creature.ritka_sag_szint }}/10</span>
+        <span class="abilities" *ngIf="creature.kepessegek && creature.kepessegek.length > 0">
+          🎯 {{ creature.kepessegek.length }} képesség
+        </span>
+      </div>
+      <div class="creature-actions" *ngIf="isAuthenticated">
+        <a [routerLink]="['/creatures', creature.id, 'edit']" class="btn-small btn-edit" (click)="$event.stopPropagation()">✏️ Szerkeszt</a>
+        <button class="btn-small btn-delete" (click)="deleteCreature(creature.id, $event)">🗑️ Töröl</button>
+      </div>
+    </div>
+  </div>
+</div>

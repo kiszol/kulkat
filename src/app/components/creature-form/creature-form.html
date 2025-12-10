@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="form-card">
+    <h1>{{ isEditMode ? '✏️ Lény Szerkesztése' : '➕ Új Lény Létrehozása' }}</h1>
+
+    <form (ngSubmit)="onSubmit()" class="creature-form">
+      <div class="form-group">
+        <label for="nev">Név *</label>
+        <input type="text" id="nev" [(ngModel)]="creature.nev!" name="nev" 
+               placeholder="pl. Teleportáló Teve" required>
+      </div>
+
+      <div class="form-group">
+        <label for="kategoria">Kategória *</label>
+        <select id="kategoria" [(ngModel)]="creature.kategoria_id!" name="kategoria_id" required>
+          <option [value]="0" disabled>Válassz kategóriát</option>
+          <option *ngFor="let kat of kategoriak" [value]="kat.id">{{ kat.nev }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="leiras">Leírás *</label>
+        <textarea id="leiras" [(ngModel)]="creature.leiras!" name="leiras" 
+                  placeholder="Részletes leírás a lényről..." rows="5" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="eredet">Eredet</label>
+        <input type="text" id="eredet" [(ngModel)]="creature.eredet!" name="eredet" 
+               placeholder="pl. Szahara, Marrakesh">
+      </div>
+
+      <div class="form-group">
+        <label for="ritka_sag">Ritkaság Szint (1-10)</label>
+        <input type="range" id="ritka_sag" [(ngModel)]="creature.ritka_sag_szint!" 
+               name="ritka_sag_szint" min="1" max="10">
+        <span class="range-value">{{ creature.ritka_sag_szint }}</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" routerLink="/creatures" class="btn btn-secondary">Mégse</button>
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+          {{ isLoading ? 'Mentés...' : (isEditMode ? 'Frissítés' : 'Létrehozás') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

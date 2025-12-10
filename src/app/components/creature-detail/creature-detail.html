@@ -1,0 +1,38 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading">Töltés...</div>
+
+  <div *ngIf="!isLoading && creature" class="detail-card">
+    <div class="header">
+      <h1>{{ creature.nev }}</h1>
+      <span class="badge">{{ creature.kategoria?.nev }}</span>
+    </div>
+
+    <div class="info-section">
+      <p class="origin" *ngIf="creature.eredet"><strong>📍 Eredet:</strong> {{ creature.eredet }}</p>
+      <p class="rarity"><strong>⭐ Ritkaság:</strong> {{ creature.ritka_sag_szint }}/10</p>
+      <p class="status"><strong>Status:</strong> {{ creature.aktiv ? '✅ Aktív' : '❌ Inaktív' }}</p>
+    </div>
+
+    <div class="description-section">
+      <h2>Leírás</h2>
+      <p>{{ creature.leiras }}</p>
+    </div>
+
+    <div class="abilities-section" *ngIf="creature.kepessegek && creature.kepessegek.length > 0">
+      <h2>🎯 Képességek</h2>
+      <div class="abilities-grid">
+        <div class="ability-card" *ngFor="let kepesseg of creature.kepessegek">
+          <h3>{{ kepesseg.nev }}</h3>
+          <p class="ability-type">{{ kepesseg.tipus }}</p>
+          <p *ngIf="kepesseg.leiras">{{ kepesseg.leiras }}</p>
+          <span class="ability-level">Szint: {{ kepesseg.pivot?.szint || 1 }}/10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a routerLink="/creatures" class="btn btn-secondary">← Vissza</a>
+      <a [routerLink]="['/creatures', creature.id, 'edit']" class="btn btn-primary">✏️ Szerkeszt</a>
+    </div>
+  </div>
+</div>

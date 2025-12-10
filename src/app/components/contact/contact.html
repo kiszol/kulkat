@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="contact-card">
+    <h1>📧 Kapcsolatfelvétel</h1>
+    <p class="subtitle">Kérdésed van? Írj nekünk!</p>
+
+    <div class="success-message" *ngIf="successMessage">
+      ✅ {{ successMessage }}
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      ❌ {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="contact-form">
+      <div class="form-group">
+        <label for="nev">Neved *</label>
+        <input type="text" id="nev" [(ngModel)]="contactData.nev" name="nev" 
+               placeholder="Teljes neved" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" [(ngModel)]="contactData.email" name="email" 
+               placeholder="email@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="targy">Tárgy *</label>
+        <input type="text" id="targy" [(ngModel)]="contactData.targy" name="targy" 
+               placeholder="Az üzenet tárgya" required>
+      </div>
+
+      <div class="form-group">
+        <label for="uzenet">Üzenet *</label>
+        <textarea id="uzenet" [(ngModel)]="contactData.uzenet" name="uzenet" 
+                  placeholder="Írd le részletesen az üzeneted..." rows="6" required></textarea>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/creatures" class="btn btn-secondary">Mégse</a>
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+          {{ isLoading ? 'Küldés...' : 'Küldés' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

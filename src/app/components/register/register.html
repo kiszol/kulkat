@@ -1,0 +1,64 @@
+<div class="register-container">
+  <div class="register-card">
+    <h1>🔮 KÜLKAT Regisztráció</h1>
+    <p class="subtitle">Csatlakozz a Különleges Lények Kataszteréhez</p>
+
+    <form (ngSubmit)="onRegister()" class="register-form">
+      <div class="form-group">
+        <label for="name">Teljes név</label>
+        <input 
+          type="text" 
+          id="name" 
+          [(ngModel)]="name" 
+          name="name"
+          placeholder="Pl. Kovács János"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          [(ngModel)]="email" 
+          name="email"
+          placeholder="email@example.com"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Jelszó (min. 8 karakter)</label>
+        <input 
+          type="password" 
+          id="password" 
+          [(ngModel)]="password" 
+          name="password"
+          placeholder="••••••••"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password_confirmation">Jelszó megerősítése</label>
+        <input 
+          type="password" 
+          id="password_confirmation" 
+          [(ngModel)]="password_confirmation" 
+          name="password_confirmation"
+          placeholder="••••••••"
+          required>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="isLoading" class="btn-primary">
+        {{ isLoading ? 'Regisztráció...' : 'Regisztráció' }}
+      </button>
+    </form>
+
+    <div class="login-link">
+      <p>Már van fiókod? <a routerLink="/login">Jelentkezz be itt!</a></p>
+    </div>
+  </div>
+</div>
